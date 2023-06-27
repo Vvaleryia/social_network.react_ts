@@ -11,17 +11,4 @@
     ;
 }
 
-.header {
-    grid-area: h;
-    background-color: aqua;
-}
 
-.nav {
-    grid-area: n;
-    background-color: aquamarine;
-}
-
-.content {
-    grid-area: c;
-    background-color: burlywood;
-}

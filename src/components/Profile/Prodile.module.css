@@ -1,0 +1,8 @@
+.item {
+    color: white;
+}
+
+.content {
+    grid-area: c;
+    background-color: burlywood;
+}
