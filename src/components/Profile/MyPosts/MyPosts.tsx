@@ -3,11 +3,15 @@ import style from './MyPosts.module.css';
 import Post from "./Post/Post";
 
 const MyPosts = () => {
-    return <div>
-        My posts
+    return <div className={style.postsBlock}>
+        <h3>My posts</h3>
         <div>
-            <textarea></textarea>
-            <button>Add post</button>
+            <div>
+                <textarea></textarea>
+            </div>
+            <div>
+                <button>Add post</button>
+            </div>
         </div>
         <div className={style.posts}>
             <Post title={'Hello, how are you ? '}/>
