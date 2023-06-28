@@ -2,11 +2,14 @@
     grid-area: n;
     background-color: aquamarine;
 }
+.item {
+    color: white;
+    padding: 10px;
+}
 .item a {
     color: white;
     text-decoration: none;
-    padding: 10px;
 }
-.active {
+.item .active {
     color: gold;
 }

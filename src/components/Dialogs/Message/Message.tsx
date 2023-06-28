@@ -1,7 +1,8 @@
 import React from 'react';
-import style from "../Message.module.css";
+import style from "./Message.module.css";
 
 export type MessagePropsType = {
+    id: number
     message: string
 }
 const Message = (props: MessagePropsType) => {
