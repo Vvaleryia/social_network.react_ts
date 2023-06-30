@@ -4,11 +4,12 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {rootStateType} from "./state/state";
+import {ActionsTypes, rootStateType, rootStoreType} from "./state/state";
 
 type AppPropsType = {
+    store: rootStoreType
     state: rootStateType
-    dispatch: (action: any) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 function App(props: AppPropsType) {
@@ -21,12 +22,11 @@ function App(props: AppPropsType) {
                     <Routes>
                         <Route path="/profile/*" element={
                             <Profile
-                            profilePage={props.state.profilePage}
-                            dispatch={props.dispatch}
-                        />}/>
-                        <Route path="/dialogs/*" element={<Dialogs messagePage={props.state.dialogsPage.message}
-                                                                   dialogsPage={props.state.dialogsPage.dialogs}
-                        />}/>
+                                profilePage={props.state.profilePage}
+                                dispatch={props.dispatch}
+                            />}/>
+                        <Route path="/dialogs/*" element={
+                            <Dialogs store={props.store}/>}/>
                     </Routes>
                 </div>
             </div>

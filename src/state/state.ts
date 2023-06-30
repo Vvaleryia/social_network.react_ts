@@ -18,6 +18,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     message: Array<MessageType>
+    newMessageBody: string
 }
 export type rootStateType = {
     profilePage: ProfilePageType
@@ -53,9 +54,10 @@ let store: rootStoreType = {
             ],
             message: [
                 {id: 1, message: 'Hello, how are you?'},
-                {id: 1, message: 'Hope, you are all right!'},
-                {id: 1, message: 'Is it ok for you to meet tomorrow at 12.00?u?'}
-            ]
+                {id: 2, message: 'Hope, you are all right!'},
+                {id: 3, message: 'Is it ok for you to meet tomorrow at 12.00?u?'}
+            ],
+            newMessageBody: ''
         }
     },
     getState() {
@@ -79,10 +81,25 @@ let store: rootStoreType = {
         } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
             this._state.profilePage.newValuePost = action.newText;
             this._callSubscriber()
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
+            this._state.dialogsPage.newMessageBody = action.newMessage;
+            this._callSubscriber()
+        } else if (action.type === 'SEND-MESSAGE') {
+           let message = this._state.dialogsPage.newMessageBody;
+           this._state.dialogsPage.newMessageBody = '';
+           let newMessage = {
+               id: 4, message: message
+           }
+           this._state.dialogsPage.message.push(newMessage)
+           this._callSubscriber();
         }
     }
 }
-export type ActionsTypes = addPostAT | updateNewPostTextAT;
+export type ActionsTypes =
+    addPostAT |
+    updateNewPostTextAT |
+    updateNewMessageBodyAT |
+    sendMessageAT;
 
 type addPostAT = {
     type: 'ADD-POST'
@@ -91,7 +108,13 @@ type updateNewPostTextAT = {
     type: 'UPDATE-NEW-POST-TEXT'
     newText: string
 }
-
+type updateNewMessageBodyAT = {
+    type: 'UPDATE-NEW-MESSAGE-BODY'
+    newMessage: string
+}
+type sendMessageAT = {
+    type: 'SEND-MESSAGE'
+}
 export const addPostAC = (): addPostAT => {
     return {
         type: 'ADD-POST' as const
@@ -101,6 +124,17 @@ export const updateNewPostTextAC = (newText: string): updateNewPostTextAT => {
     return {
         type: 'UPDATE-NEW-POST-TEXT' as const,
         newText: newText
+    }
+}
+export const updateNewMessageBodyAC = (newMessage: string): updateNewMessageBodyAT => {
+    return {
+        type: 'UPDATE-NEW-MESSAGE-BODY' as const,
+        newMessage
+    }
+}
+export const sendMessageAC = (): sendMessageAT => {
+    return {
+        type: 'SEND-MESSAGE' as const
     }
 }
 export default store;

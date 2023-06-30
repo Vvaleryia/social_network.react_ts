@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
 import style from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {addPostAC, ProfilePageType, updateNewPostTextAC} from "../../../state/state";
+import {ActionsTypes, addPostAC, ProfilePageType, updateNewPostTextAC} from "../../../state/state";
 
 export type PostDataPropsType = {
     profilePage: ProfilePageType
-    dispatch: (action: any) => void
+    dispatch: (action: ActionsTypes) => void
 }
 const MyPosts = (props: PostDataPropsType) => {
     let postDataElement = props.profilePage.posts.map(post =>

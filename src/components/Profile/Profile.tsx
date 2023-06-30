@@ -1,11 +1,11 @@
 import React from 'react';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ProfilePageType} from "../../state/state";
+import {ActionsTypes, ProfilePageType} from "../../state/state";
 
 type ProfilePropsType = {
     profilePage: ProfilePageType
-   dispatch: (action: any) => void
+   dispatch: (action: ActionsTypes) => void
 }
 const Profile = (props: ProfilePropsType) => {
     return <div>

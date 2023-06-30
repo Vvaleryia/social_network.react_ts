@@ -1,23 +1,45 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import style from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogsType, MessageType} from "../../state/state";
+import {rootStoreType, sendMessageAC, updateNewMessageBodyAC} from "../../state/state";
 
 type DialogsPropsType = {
-    dialogsPage: DialogsType[]
-    messagePage: MessageType[]
+    store: rootStoreType
 }
 const Dialogs = (props: DialogsPropsType) => {
-    let dialogsElement = props.dialogsPage.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
-    let messagesElement = props.messagePage.map(message => <Message id={message.id} message={message.message}/>)
+
+    const state = props.store.getState().dialogsPage;
+
+    const dialogsElement = state.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
+    const messagesElement = state.message.map(message => <Message id={message.id} message={message.message}/>)
+    const newMessageBody =state.newMessageBody;
+    const onSendMessageHandler = () => {
+        props.store.dispatch(sendMessageAC())
+    }
+    const onNewMessageChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        const body = event.currentTarget.value
+        props.store.dispatch(updateNewMessageBodyAC(body))
+    }
     return (
         <div className={style.dialogs}>
             <div className={style.dialogsItem}>
                 {dialogsElement}
             </div>
             <div className={style.messages}>
-                {messagesElement}
+                <div>{messagesElement}</div>
+                <div>
+                    <div>
+                        <textarea
+                            value={newMessageBody}
+                            placeholder={'Enter your message'}
+                            onChange={onNewMessageChange}>
+                         </textarea>
+                    </div>
+                    <div>
+                        <button onClick={onSendMessageHandler}>Send</button>
+                    </div>
+                </div>
             </div>
         </div>
     );
