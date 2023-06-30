@@ -1,28 +1,26 @@
 import React, {useRef} from 'react';
 import style from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {ProfilePageType, updateNewPostText} from "../../../state/state";
+import {addPostAC, ProfilePageType, updateNewPostTextAC} from "../../../state/state";
 
 export type PostDataPropsType = {
     profilePage: ProfilePageType
-    addPost: () => void
-    newValuePost: string
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: any) => void
 }
 const MyPosts = (props: PostDataPropsType) => {
-    let postDataElement = props.profilePage.posts.map(post => <Post id={post.id} message={post.message}
-                                                                    likesCount={post.likesCount}/>)
+    let postDataElement = props.profilePage.posts.map(post =>
+        <Post id={post.id}
+              message={post.message}
+              likesCount={post.likesCount}/>)
     const addPost = () => {
         if (newPostEl.current !== null) {
-            let text = newPostEl.current.value;
-            props.addPost()
-            props.updateNewPostText('')
+            props.dispatch(addPostAC())
         }
     }
     const onChangeValuePost = () => {
         if (newPostEl.current !== null) {
             let text = newPostEl.current.value;
-            props.updateNewPostText(text)
+            props.dispatch(updateNewPostTextAC(text))
         }
     }
     let newPostEl = useRef<HTMLTextAreaElement>(null)
@@ -31,7 +29,7 @@ const MyPosts = (props: PostDataPropsType) => {
         <div>
             <div>
                 <textarea ref={newPostEl}
-                          value={props.newValuePost}
+                          value={props.profilePage.newValuePost}
                           onChange={onChangeValuePost}
                 />
             </div>
