@@ -2,16 +2,13 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {ActionsTypes, rootStateType, rootStoreType} from "./state/state";
+import {rootStoreType} from "./redux/state";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 type AppPropsType = {
     store: rootStoreType
-    state: rootStateType
-    dispatch: (action: ActionsTypes) => void
 }
-
 function App(props: AppPropsType) {
     return (
         <BrowserRouter>
@@ -21,12 +18,11 @@ function App(props: AppPropsType) {
                 <div className={'app-wrapper-content'}>
                     <Routes>
                         <Route path="/profile/*" element={
-                            <Profile
-                                profilePage={props.state.profilePage}
-                                dispatch={props.dispatch}
-                            />}/>
+                            <Profile store={props.store}/>}
+                        />
                         <Route path="/dialogs/*" element={
-                            <Dialogs store={props.store}/>}/>
+                            <DialogsContainer store={props.store}/>}
+                        />
                     </Routes>
                 </div>
             </div>
