@@ -1,5 +1,5 @@
-import {profileReducer} from "./profile-reducer";
-import {dialogsReducer} from "./dialogs-reducer";
+import {initialProfileState, profileReducer} from "./profile-reducer";
+import {dialogsReducer, initialStateDialogsType} from "./dialogs-reducer";
 
 export type MessageType = {
     id: number
@@ -9,23 +9,11 @@ export type DialogsType = {
     id: number
     name: string
 }
-export type PostType = {
-    id: number
-    message: string
-    likesCount: number
-}
-export type ProfilePageType = {
-    posts: Array<PostType>
-    newValuePost: string
-}
-export type DialogsPageType = {
-    dialogs: Array<DialogsType>
-    message: Array<MessageType>
-    newMessageBody: string
-}
+
+
 export type rootStateType = {
-    profilePage: ProfilePageType
-    dialogsPage: DialogsPageType
+    profilePage: initialProfileState
+    dialogsPage: initialStateDialogsType
 
 }
 

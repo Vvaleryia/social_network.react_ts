@@ -1,7 +1,9 @@
-import {ProfilePageType} from "./state";
-
-type ActionsType = addPostAT | updateNewPostTextAT;
-const initialState =  {
+export type PostType = {
+    id: number
+    message: string
+    likesCount: number
+}
+const initialState: initialProfileState = {
     posts: [
         {id: 1, message: 'Hello, how are you ?', likesCount: 12},
         {id: 2, message: 'Hey, I/m all right, thanks', likesCount: 8},
@@ -9,7 +11,12 @@ const initialState =  {
     ],
     newValuePost: ''
 }
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
+export type initialProfileState = {
+    posts: Array<PostType>
+    newValuePost: string
+}
+type ActionsType = addPostAT | updateNewPostTextAT;
+export const profileReducer = (state: initialProfileState = initialState, action: ActionsType): initialProfileState => {
     switch (action.type) {
         case 'ADD-POST':
             let newPost = {
@@ -17,11 +24,16 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 message: state.newValuePost,
                 likesCount: 0
             }
-            state.posts.push(newPost);
-            return state
+            return {
+                ...state,
+                newValuePost: '',
+                posts: [...state.posts, newPost]
+            }
         case 'UPDATE-NEW-POST-TEXT':
-            state.newValuePost = action.newText;
-            return state
+            return {
+                ...state,
+                newValuePost: action.newText
+            }
         default:
             return state
     }
