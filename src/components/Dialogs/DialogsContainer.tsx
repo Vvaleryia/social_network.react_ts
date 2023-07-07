@@ -16,8 +16,8 @@ type mapDispatchPropsType = {
 export type DialogsPropsType  = mapDispatchPropsType & mapStatePropsType;
 const mapStateToProps = (state: AppStateType): mapStatePropsType => {
     return {
-        state: state.dialogsReducer,
-        newMessageBody: state.dialogsReducer.newMessageBody
+        state: state.dialogsPage,
+        newMessageBody: state.dialogsPage.newMessageBody
     }
 }
 //in the first object will be data from the state
